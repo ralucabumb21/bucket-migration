@@ -70,14 +70,12 @@ def copy_object_from_a_bucket_to_another(old_bucket_name, old_bucket_prefix, new
                                          new_bucket_prefix):
     # Setup source and destination bucket details
     legacy_bucket = s3_resource.Bucket(old_bucket_name)
-    legacy_bucket_prefix = old_bucket_prefix
     production_bucket = s3_resource.Bucket(new_bucket_name)
-    production_bucket_prefix = new_bucket_prefix
 
     logger.info("Starting copy from bucket " + legacy_bucket.name + " to bucket "
                 + production_bucket.name)
     if util.is_file_empty(constans.MIGRATION_FILE_NAME):
-        migration_png_list = get_all_s3_keys("legacy-s3-test", "image/", ".png")
+        migration_png_list = get_all_s3_keys(legacy_bucket.name, old_bucket_prefix, ".png")
         util.write_to_file(file_name=constans.MIGRATION_FILE_NAME, list_for_file=migration_png_list)
     migration_png_list = util.read_from_file(file_name=constans.MIGRATION_FILE_NAME)
     while migration_png_list:
@@ -88,7 +86,7 @@ def copy_object_from_a_bucket_to_another(old_bucket_name, old_bucket_prefix, new
             if is_migration_tag:
                 logger.info('%s object was already migrated.', png_file)
             else:
-                production_key = production_bucket_prefix + png_file[len(legacy_bucket_prefix):]
+                production_key = new_bucket_prefix + png_file[len(old_bucket_prefix):]
                 source_bucket = {"Bucket": legacy_bucket.name, "Key": png_file}
                 try:
                     logger.info("Initiating copy of the object: %s", png_file)
