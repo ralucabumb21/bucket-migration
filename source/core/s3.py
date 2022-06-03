@@ -1,7 +1,10 @@
 import logging
 import os
+import glob
+
 import boto3
-from utility import util, constans
+from utility import util
+from utility import constans
 
 from botocore.exceptions import ClientError
 
@@ -102,3 +105,16 @@ def copy_object_from_a_bucket_to_another(old_bucket_name, old_bucket_prefix, new
             logger.info("%s was removed from migration list.", png_file)
             util.write_to_file(file_name=constans.MIGRATION_FILE_NAME,
                                list_for_file=migration_png_list)
+
+
+def upload_files_to_s3(path, file_name):
+    # The list of files we're uploading to S3
+    filenames = glob.glob(path + file_name)
+    try:
+        for my_file in filenames:
+            s3_file = f"{constans.OLD_BUCKET_PREFIX}/{os.path.basename(my_file)}"
+            s3_client.upload_file(my_file, constans.OLD_BUCKET, s3_file)
+    except Exception as error:
+        logger.error("Error in upload operation: %s", error)
+    finally:
+        logger.info("All .png files were uploaded successfully.")
