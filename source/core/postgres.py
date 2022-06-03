@@ -4,6 +4,8 @@ import psycopg2
 from dotenv import load_dotenv
 
 # Required to load the environment variables defined in .env
+from psycopg2._psycopg import OperationalError
+
 load_dotenv()
 
 # Setup logger
@@ -13,7 +15,9 @@ logging.basicConfig(level=logging.INFO,
 logger = logging.getLogger(__name__)
 
 
-def update_table(table_name, column_name):
+def connect_to_db():
+    global cursor
+    global connection
     try:
         connection = psycopg2.connect(host=os.environ.get('PG_HOST'),
                                       port=os.environ.get('PG_PORT'),
@@ -21,18 +25,32 @@ def update_table(table_name, column_name):
                                       password=os.environ.get('PG_PASSWORD'),
                                       dbname=os.environ.get('PG_DATABASE'))
         cursor = connection.cursor()
+    except OperationalError as err:
+        logger.error(err)
 
+
+def close_db_connection():
+    if connection:
+        cursor.close()
+        connection.close()
+        logger.info("Closing PostgreSQL connection.")
+
+
+def update_table(table_name, column_name):
+    connect_to_db()
+    try:
         # Check if there are any records with image URL
         logger.info("Table Before updating record.")
-        sql_select_query = 'select * from {} where {} LIKE \'image%\''\
+        sql_select_query = 'select * from {} where {} LIKE \'image%\'' \
             .format(table_name, column_name)
         cursor.execute(sql_select_query)
         image_url_records = cursor.fetchall()
 
         # Update all rows in avatar_url column and replace image with avatar
         if image_url_records:
-            logger.info("There were found avatar entry with image URL.\n Updating URLs...")
-            sql_update_query = 'update {} set {} = replace({},\'image\',\'avatar\')'\
+            logger.info("There were found %s avatar entry with image URL.\n Updating URLs...",
+                        format(len(image_url_records)))
+            sql_update_query = 'update {} set {} = replace({},\'image\',\'avatar\')' \
                 .format(table_name, column_name, column_name)
             cursor.execute(sql_update_query)
             connection.commit()
@@ -45,7 +63,35 @@ def update_table(table_name, column_name):
 
     finally:
         # closing database connection.
-        if connection:
-            cursor.close()
-            connection.close()
-            logger.info("Closing PostgreSQL connection.")
+        close_db_connection()
+
+
+def populate_db(min_range, max_range):
+    connect_to_db()
+    # list of rows to be inserted
+    db_user_avatar_entry_list = []
+    for index in range(min_range, max_range):
+        db_user_avatar_entry_list.append((index, "image/avatar-{}.png".format(str(index))))
+
+    db_user_entry_list = []
+    for index in range(min_range, max_range):
+        db_user_entry_list.append((index, "user{}".format(str(index)), "user{}".format(str(index))))
+
+    # cursor.mogrify() to insert multiple values
+    users_args = ','.join(cursor.mogrify("(%s,%s,%s)", i).decode('utf-8')
+                          for i in db_user_entry_list)
+
+    # cursor.mogrify() to insert multiple values
+    user_avatar_args = ','.join(cursor.mogrify("(%s,%s)", i).decode('utf-8')
+                                for i in db_user_avatar_entry_list)
+
+    # executing the sql statement
+    cursor.execute("INSERT INTO users (user_id, username, password) VALUES " + users_args)
+
+    cursor.execute("INSERT INTO user_avatar (user_id, avatar_url) VALUES " + user_avatar_args)
+
+    # commiting changes
+    connection.commit()
+
+    # closing database connection.
+    close_db_connection()
