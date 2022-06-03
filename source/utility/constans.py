@@ -5,6 +5,10 @@ NEW_BUCKET = "production-s3-test"
 NEW_BUCKET_PREFIX = "avatar"
 MIGRATION_FILE_NAME = "utility/png_keep_file.txt"
 
+# Set up the test data
+DATA_FILES_LOCATION = ""
+FILE_NAME = "\\avatar*.png"
+
 # PG DB Table Details
 TABLE_NAME = "user_avatar"
 COLUMN_NAME = "avatar_url"
