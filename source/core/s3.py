@@ -95,10 +95,8 @@ def get_all_s3_keys(bucket, prefix, suffix):
 
         try:
             kwargs['ContinuationToken'] = resp['NextContinuationToken']
-            print("was here")
         except KeyError:
             break
-    print(keys)
     return keys
 
 
@@ -126,8 +124,7 @@ def copy_object_from_a_bucket_to_another(old_bucket_name, old_bucket_prefix, new
     migration_png_list = util.read_from_file(file_name=constans.MIGRATION_FILE_NAME)
     while migration_png_list:
         for png_file in migration_png_list:
-            logger.info("PNG file: %s", png_file)
-            logger.info("List in for: %s", str(migration_png_list))
+            logger.info("Remaining files to copy: %s", str(migration_png_list))
             is_migration_tag = get_object_tags_set("legacy-s3-test", png_file)
             if is_migration_tag:
                 logger.info('%s object was already migrated.', png_file)

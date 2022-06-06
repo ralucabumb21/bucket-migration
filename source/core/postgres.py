@@ -77,6 +77,7 @@ def update_table(table_name, column_name):
     finally:
         # closing database connection.
         close_db_connection()
+        return "Update query has finished."
 
 
 def populate_db(min_range, max_range):
