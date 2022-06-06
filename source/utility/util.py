@@ -13,7 +13,7 @@ def create_png_file_for_s3(file_path, min_range, max_range):
     max_range : int, required
     """
     for index in range(min_range, max_range):
-        touch("{}\\avatar-{}.png".format(file_path, str(index)))
+        touch("{}/avatar-{}.png".format(file_path, str(index)))
 
 
 def write_to_file(file_name, list_for_file):
