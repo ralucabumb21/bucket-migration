@@ -2,10 +2,9 @@ import logging
 import os
 import psycopg2
 from dotenv import load_dotenv
-
-# Required to load the environment variables defined in .env
 from psycopg2._psycopg import OperationalError
 
+# Required to load the environment variables defined in .env
 load_dotenv()
 
 # Setup logger
@@ -16,6 +15,9 @@ logger = logging.getLogger(__name__)
 
 
 def connect_to_db():
+    """
+    Connects to a Postgres DB.
+    """
     global cursor
     global connection
     try:
@@ -30,6 +32,9 @@ def connect_to_db():
 
 
 def close_db_connection():
+    """
+    Closes a DB connection
+    """
     if connection:
         cursor.close()
         connection.close()
@@ -37,6 +42,14 @@ def close_db_connection():
 
 
 def update_table(table_name, column_name):
+    """
+    Updates table DB
+
+    Parameters
+    ----------
+    table_name : str, required
+    column_name : str, required
+    """
     connect_to_db()
     try:
         # Check if there are any records with image URL
@@ -67,6 +80,15 @@ def update_table(table_name, column_name):
 
 
 def populate_db(min_range, max_range):
+    """
+    Populates the users and user_avatar table DB
+    Set the range to create unique png files
+
+    Parameters
+    ----------
+    min_range : int, required
+    max_range : int, required
+    """
     connect_to_db()
     # list of rows to be inserted
     db_user_avatar_entry_list = []

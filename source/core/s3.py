@@ -21,6 +21,17 @@ s3_resource = boto3.resource("s3")
 
 
 def get_object_tags_set(bucket_name, object_key):
+    """
+    Get Tags for an object from a bucket
+    Parameters
+    ----------
+    bucket_name : str, required
+    object_key : str, required
+
+    Returns
+    -------
+    True if MigrationStatus is set, False otherwise
+    """
     get_object_tags_response = s3_client.get_object_tagging(
         Bucket=bucket_name,
         Key=object_key,
@@ -31,6 +42,17 @@ def get_object_tags_set(bucket_name, object_key):
 
 
 def update_object_tag_as_migrated(bucket_name, object_key):
+    """
+    Updates Tags for an object from a bucket
+    Parameters
+    ----------
+    bucket_name : str, required
+    object_key : str, required
+
+    Returns
+    -------
+    Response
+    """
     put_migration_tag_response = s3_client.put_object_tagging(
         Bucket=bucket_name,
         Key=object_key,
@@ -48,7 +70,18 @@ def update_object_tag_as_migrated(bucket_name, object_key):
 
 
 def get_all_s3_keys(bucket, prefix, suffix):
-    """Get a list of all keys in an S3 bucket."""
+    """
+    Get a list of all keys in an S3 bucket.
+    Parameters
+    ----------
+    bucket : str, required
+    prefix : str, required
+    suffix : str, required
+
+    Returns
+    -------
+    All keys in a list
+    """
     keys = []
 
     kwargs = {'Bucket': bucket, 'Prefix': prefix}
@@ -71,6 +104,16 @@ def get_all_s3_keys(bucket, prefix, suffix):
 
 def copy_object_from_a_bucket_to_another(old_bucket_name, old_bucket_prefix, new_bucket_name,
                                          new_bucket_prefix):
+    """
+    Copies object from a bucket to another
+    Parameters
+    ----------
+    old_bucket_name : str, required
+    old_bucket_prefix : str, required
+    new_bucket_name : str, required
+    new_bucket_prefix : str, required
+    """
+
     # Setup source and destination bucket details
     legacy_bucket = s3_resource.Bucket(old_bucket_name)
     production_bucket = s3_resource.Bucket(new_bucket_name)
@@ -108,6 +151,13 @@ def copy_object_from_a_bucket_to_another(old_bucket_name, old_bucket_prefix, new
 
 
 def upload_files_to_s3(path, file_name):
+    """
+    Uploads a list of files to a bucket
+    Parameters
+    ----------
+    path : str, required
+    file_name : str, required
+    """
     # The list of files we're uploading to S3
     filenames = glob.glob(path + file_name)
     try:
