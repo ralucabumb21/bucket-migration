@@ -38,13 +38,13 @@ COLUMN_NAME = "avatar_url"
 ```
 ### Command to execute the main script
 ```bash
-cd <PATH>/bucker-migration/source
+cd <PATH>/bucket-migration/source
 python3 main.py
 ```
 
 ### Command to execute the unit tests
 ```bash
-cd <PATH>/bucker-migration/source
+cd <PATH>/bucket-migration/source
 pytest test
 ```
 
@@ -65,6 +65,6 @@ MAX_RANGE = 2000
 
 3. Execute commands:
 ```bash
-cd <PATH>/bucker-migration/source
+cd <PATH>/bucket-migration/source
 python3 test_data_setup.py
 ```
