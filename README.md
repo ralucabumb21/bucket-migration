@@ -97,20 +97,20 @@ The main script is used to do the following:
     
 ### Command to execute    
 ```bash
-cd <PATH>/bucket-migration/source
+cd bucket-migration/source
 python3 main.py
 ```
 
 ### Command to execute the unit tests
 The unit tests only performs a test on the functions created to execute the migration.
 ```bash
-cd <PATH>/bucket-migration/source
+cd bucket-migration/source
 pytest test
 ```
 
 ## How to create test data
 This script was created to ease the creation of test data.
-Assuming the legacy-s3-test bucket and Postgres DB are created the script will populat each resource with test data.
+Assuming the legacy-s3-test bucket and Postgres DB are created the script will populate each resource with test data.
 
 ### Usage
 1. Create a folder where you want to create/store the .png files
@@ -128,7 +128,7 @@ MAX_RANGE = 2000
 
 3. Execute command:
 ```bash
-cd <PATH>/bucket-migration/source
+cd bucket-migration/source
 python3 test_data_setup.py
 ```
 
@@ -166,11 +166,6 @@ python3 test_data_setup.py
 ```text
 [2022.06.06-15:41:01] [INFO] (s3.py:122): Starting copy from bucket legacy-s3-test to bucket production-s3-test
 [......]
-[2022.06.06-15:45:47] [INFO] (s3.py:127): Remaining files to copy: 60
-[2022.06.06-15:45:47] [INFO] (s3.py:135): Initiating copy of the object: image/avatar-2700.png
-[2022.06.06-15:45:47] [INFO] (s3.py:142): image/avatar-2700.png object was successfully migrated to avatar/avatar-2700.png
-[2022.06.06-15:45:47] [INFO] (s3.py:68): Migration successful status was set for object:  image/avatar-2700.png
-[2022.06.06-15:45:47] [INFO] (s3.py:145): image/avatar-2700.png was removed from migration list.
 [2022.06.06-15:45:47] [INFO] (s3.py:127): Remaining files to copy: 59
 [2022.06.06-15:45:47] [INFO] (s3.py:135): Initiating copy of the object: image/avatar-2759.png
 [2022.06.06-15:45:47] [INFO] (s3.py:142): image/avatar-2759.png object was successfully migrated to avatar/avatar-2759.png
@@ -180,6 +175,31 @@ python3 test_data_setup.py
  Updating URLs...
 [2022.06.06-15:45:53] [INFO] (postgres.py:70): Records Updated successfully.
 [2022.06.06-15:45:53] [INFO] (postgres.py:41): Closing PostgreSQL connection.
+```
+#### Command execution log for 2951 entries
+```text
+[2022.06.07-12:22:20] [INFO] (credentials.py:1313): Found credentials in shared credentials file: ~/.aws/credentials
+[2022.06.07-12:22:20] [INFO] (s3.py:120): Starting copy from bucket legacy-s3-test to bucket production-s3-test
+[2022.06.07-12:22:21] [INFO] (s3.py:127): Remaining files to copy: 2951
+[2022.06.07-12:22:21] [INFO] (s3.py:130): image/avatar-10.png object was already migrated.
+[2022.06.07-12:22:21] [INFO] (s3.py:145): image/avatar-10.png was removed from migration list.
+[2022.06.07-12:22:21] [INFO] (s3.py:127): Remaining files to copy: 2950
+[2022.06.07-12:22:21] [INFO] (s3.py:135): Initiating copy of the object: image/avatar-1000.png
+[2022.06.07-12:22:21] [INFO] (s3.py:142): image/avatar-1000.png object was successfully migrated to avatar/avatar-1000.png
+[2022.06.07-12:22:21] [INFO] (s3.py:68): Migration successful status was set for object:  image/avatar-1000.png
+[2022.06.07-12:22:21] [INFO] (s3.py:145): image/avatar-1000.png was removed from migration list.
+[......]
+[2022.06.07-12:27:35] [INFO] (s3.py:127): Remaining files to copy: 1
+[2022.06.07-12:27:35] [INFO] (s3.py:135): Initiating copy of the object: image/avatar-2845.png
+[2022.06.07-12:27:35] [INFO] (s3.py:142): image/avatar-2845.png object was successfully migrated to avatar/avatar-2845.png
+[2022.06.07-12:27:35] [INFO] (s3.py:68): Migration successful status was set for object:  image/avatar-2845.png
+[2022.06.07-12:27:35] [INFO] (s3.py:145): image/avatar-2845.png was removed from migration list.
+[2022.06.07-12:27:35] [INFO] (postgres.py:56): Table Before updating record.
+[2022.06.07-12:27:35] [INFO] (postgres.py:65): There were found 2951 avatar entry with image URL.
+ Updating URLs...
+[2022.06.07-12:27:35] [INFO] (postgres.py:70): Records Updated successfully.
+[2022.06.07-12:27:35] [INFO] (postgres.py:41): Closing PostgreSQL connection.
+
 ```
 #### [Screenshot] AWS S3 legacy-s3-test bucket migration result
 ***
