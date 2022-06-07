@@ -151,6 +151,7 @@ python3 test_data_setup.py
 
 ### Migration
 #### Command execution log for 500 entries
+Migration from legacy to production bucket and update in PG DB took __~1 min__.
 ```text
 [2022.06.06-15:30:03] [INFO] (s3.py:122): Starting copy from bucket legacy-s3-test to bucket production-s3-test
 [2022.06.06-15:30:04] [INFO] (s3.py:127): Remaining files to copy: 500
@@ -163,6 +164,7 @@ python3 test_data_setup.py
 [2022.06.06-15:31:27] [INFO] (postgres.py:41): Closing PostgreSQL connection.
 ```
 #### Command execution log for 2000 entries
+Migration from legacy to production bucket and update in PG DB took __~4 mins__.
 ```text
 [2022.06.06-15:41:01] [INFO] (s3.py:122): Starting copy from bucket legacy-s3-test to bucket production-s3-test
 [......]
@@ -177,6 +179,7 @@ python3 test_data_setup.py
 [2022.06.06-15:45:53] [INFO] (postgres.py:41): Closing PostgreSQL connection.
 ```
 #### Command execution log for 2951 entries
+Migration from legacy to production bucket and update in PG DB took __~5 mins__.
 ```text
 [2022.06.07-12:22:20] [INFO] (credentials.py:1313): Found credentials in shared credentials file: ~/.aws/credentials
 [2022.06.07-12:22:20] [INFO] (s3.py:120): Starting copy from bucket legacy-s3-test to bucket production-s3-test
@@ -211,3 +214,4 @@ python3 test_data_setup.py
 #### [Screenshot] Postgres DB query migration result
 ***
 ![img.png](readme_images/pg_post_migration.png)
+
