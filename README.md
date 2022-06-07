@@ -1,5 +1,4 @@
 # bucket-migration
-***
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
@@ -16,14 +15,14 @@
   - [Example of execution](#example-of-execution)
     - [Test data creation](#test-data-creation)
       - [Command execution log](#command-execution-log)
-      - [AWS S3 legacy-s3-test bucket before migration](#aws-s3-legacy-s3-test-bucket)
-      - [Postgres DB query before migration](#postgres-db-query)
+      - [[Screenshot] AWS S3 legacy-s3-test bucket before migration](#aws-s3-legacy-s3-test-bucket)
+      - [[Screenshot] Postgres DB query before migration](#postgres-db-query)
     - [Migration](#migration)
       - [Command execution log for 500 entries](#command-execution-log-for-500-entries)
       - [Command execution log for 2000 entries](#command-execution-log-for-2000-entries)
-      - [AWS S3 legacy-s3-test bucket migration result](#aws-s3-legacy-s3-test-bucket-1)
-      - [AWS S3 production-s3-test bucket migration result](#aws-s3-production-s3-test-bucket)
-      - [Postgres DB query migration result](#postgres-db-query-1)
+      - [[Screenshot] AWS S3 legacy-s3-test bucket migration result](#aws-s3-legacy-s3-test-bucket-1)
+      - [[Screenshot] AWS S3 production-s3-test bucket migration result](#aws-s3-production-s3-test-bucket)
+      - [[Screenshot] Postgres DB query migration result](#postgres-db-query-1)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -146,9 +145,10 @@ python3 test_data_setup.py
 [2022.06.06-15:28:54] [INFO] (postgres.py:41): Closing PostgreSQL connection.
 [2022.06.06-15:29:13] [INFO] (s3.py:170): All .png files were uploaded successfully.
 ```
-#### AWS S3 legacy-s3-test bucket before migration
+#### [Screenshot] AWS S3 legacy-s3-test bucket before migration
+***
 ![img.png](readme_images/legacy_s3_pre_migration.png)
-#### Postgres DB query before migration
+#### [Screenshot] Postgres DB query before migration
 ![img_1.png](readme_images/pg_pre_migration.png)
 
 ### Migration
@@ -183,11 +183,11 @@ python3 test_data_setup.py
 [2022.06.06-15:45:53] [INFO] (postgres.py:70): Records Updated successfully.
 [2022.06.06-15:45:53] [INFO] (postgres.py:41): Closing PostgreSQL connection.
 ```
-#### AWS S3 legacy-s3-test bucket migration result
+#### [Screenshot] AWS S3 legacy-s3-test bucket migration result
 ![img.png](readme_images/legacy_s3_post_migration.png)
 ![img_1.png](readme_images/legacy_s3_post_migration_tag.png)
 
-#### AWS S3 production-s3-test bucket migration result
+#### [Screenshot] AWS S3 production-s3-test bucket migration result
 ![img.png](readme_images/production_s3_post_migration.png)
-#### Postgres DB query migration result
+#### [Screenshot] Postgres DB query migration result
 ![img.png](readme_images/pg_post_migration.png)
