@@ -113,7 +113,7 @@ def populate_db(min_range, max_range):
 
     cursor.execute("INSERT INTO user_avatar (user_id, avatar_url) VALUES " + user_avatar_args)
 
-    # commiting changes
+    # committing changes
     connection.commit()
 
     # closing database connection.
