@@ -2,7 +2,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
 - [bucket-migration](#bucket-migration)
   - [Repository description](#repository-description)
   - [Setup prerequisites](#setup-prerequisites)
@@ -15,24 +14,22 @@
   - [Example of execution](#example-of-execution)
     - [Test data creation](#test-data-creation)
       - [Command execution log](#command-execution-log)
-      - [[Screenshot] AWS S3 legacy-s3-test bucket before migration](#aws-s3-legacy-s3-test-bucket)
-      - [[Screenshot] Postgres DB query before migration](#postgres-db-query)
+      - [[Screenshot] AWS S3 legacy-s3-test bucket before migration](#screenshot-aws-s3-legacy-s3-test-bucket-before-migration)
+      - [[Screenshot] Postgres DB query before migration](#screenshot-postgres-db-query-before-migration)
     - [Migration](#migration)
       - [Command execution log for 500 entries](#command-execution-log-for-500-entries)
       - [Command execution log for 2000 entries](#command-execution-log-for-2000-entries)
-      - [[Screenshot] AWS S3 legacy-s3-test bucket migration result](#aws-s3-legacy-s3-test-bucket-1)
-      - [[Screenshot] AWS S3 production-s3-test bucket migration result](#aws-s3-production-s3-test-bucket)
-      - [[Screenshot] Postgres DB query migration result](#postgres-db-query-1)
+      - [[Screenshot] AWS S3 legacy-s3-test bucket migration result](#screenshot-aws-s3-legacy-s3-test-bucket-migration-result)
+      - [[Screenshot] AWS S3 production-s3-test bucket migration result](#screenshot-aws-s3-production-s3-test-bucket-migration-result)
+      - [[Screenshot] Postgres DB query migration result](#screenshot-postgres-db-query-migration-result)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 ## Repository description
 Bucket-migration is a repository that perform the following:
 - copies the content of a bucket to another 
     - based on the parameters set in constants.py it copies from an old bucket and its prefix to a new bucket and its prefix
 - updates a column content from a Postgres DB
     - updates the rows of the avatar_url column from image to avatar
-
 
 ##  Setup prerequisites
 1. Create the following resources in AWS
@@ -149,6 +146,7 @@ python3 test_data_setup.py
 ***
 ![img.png](readme_images/legacy_s3_pre_migration.png)
 #### [Screenshot] Postgres DB query before migration
+***
 ![img_1.png](readme_images/pg_pre_migration.png)
 
 ### Migration
@@ -184,10 +182,12 @@ python3 test_data_setup.py
 [2022.06.06-15:45:53] [INFO] (postgres.py:41): Closing PostgreSQL connection.
 ```
 #### [Screenshot] AWS S3 legacy-s3-test bucket migration result
+***
 ![img.png](readme_images/legacy_s3_post_migration.png)
 ![img_1.png](readme_images/legacy_s3_post_migration_tag.png)
-
 #### [Screenshot] AWS S3 production-s3-test bucket migration result
+***
 ![img.png](readme_images/production_s3_post_migration.png)
 #### [Screenshot] Postgres DB query migration result
+***
 ![img.png](readme_images/pg_post_migration.png)
