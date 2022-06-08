@@ -33,6 +33,7 @@ Bucket-migration is a repository that perform the following:
 
 ##  Setup prerequisites
 1. Create the following resources in AWS
+    - 1 AWS user with the policy from __source/utility/user_policy.json__
     - 2 AWS S3 Bucket, one containing the prefix __image__, and the other __avatar__
     - 1 Postgres DB containing 2 tables: __users__ and __user_avatar__
    ```
@@ -47,7 +48,7 @@ Bucket-migration is a repository that perform the following:
         FOREIGN KEY (user_id)
         REFERENCES users (user_id));
    ```
-    - 1 Amazon Linux EC2 instance. This instance comes with _awscli_, _python3_ and _pip3_ preinstalled
+    - 1 Amazon Linux EC2 instance. This instance type comes with _awscli_, _python3_ and _pip3_ preinstalled
 1. Install the requirements listed in __requirements.txt__: <br />
 ```bash 
 pip3 install -r requirements.txt
